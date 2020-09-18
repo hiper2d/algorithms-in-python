@@ -1,3 +1,6 @@
+from sys import getsizeof
+
+
 class CompressedGene:
     def __init__(self, gene: str) -> None:
         self._compress(gene)
@@ -33,8 +36,14 @@ class CompressedGene:
                 raise ValueError("Invalid code: {}".format(letter))
         return result[::-1]
 
+    def __str__(self):
+        return self.decompress()
+
 
 if __name__ == "__main__":
-    compressed: CompressedGene = CompressedGene("AAT")
-    print(compressed.bit_string)
-    print(compressed.decompress())
+    original = "TAGGGATTAACCGTTATATATATATAGCCATGGATCGATTATATAGGGATTAACCGTTATATATATATAGCCATGGATCGATTATA" * 100
+    compressed: CompressedGene = CompressedGene(original)
+    print("Original is {} bytes".format(getsizeof(original)))
+    print("Compressed is {} bytes".format(getsizeof(compressed.bit_string)))
+    print(compressed)
+    print("Decompressed and Original are the same: {}".format(original == compressed.decompress()))
