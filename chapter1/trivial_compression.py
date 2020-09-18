@@ -17,7 +17,24 @@ class CompressedGene:
             else:
                 raise ValueError("Invalid Nucleotide: {}".format(gene))
 
+    def decompress(self) -> str:
+        result = ""
+        for i in range(0, self.bit_string.bit_length() - 1, 2):
+            letter: int = self.bit_string >> i & 0b11
+            if letter == 0b00:
+                result += "A"
+            elif letter == 0b01:
+                result += "C"
+            elif letter == 0b10:
+                result += "G"
+            elif letter == 0b11:
+                result += "T"
+            else:
+                raise ValueError("Invalid code: {}".format(letter))
+        return result[::-1]
+
 
 if __name__ == "__main__":
-    compressed: CompressedGene = CompressedGene("AA")
+    compressed: CompressedGene = CompressedGene("AAT")
     print(compressed.bit_string)
+    print(compressed.decompress())
