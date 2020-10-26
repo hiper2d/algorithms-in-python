@@ -17,7 +17,7 @@ def encrypt(source: str) -> Tuple[int, int]:
 
 def decrypt(dummy_key: int, encrypted_key: int) -> str:
     decrypted_key = encrypted_key ^ dummy_key
-    decrypted_bytes: bytes = decrypted_key.to_bytes(decrypted_key.bit_length() + 7 // 8, "big")
+    decrypted_bytes: bytes = decrypted_key.to_bytes((decrypted_key.bit_length() + 7) // 8, "big")
     return decrypted_bytes.decode()
 
 
