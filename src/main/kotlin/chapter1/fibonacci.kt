@@ -1,7 +1,5 @@
 package chapter1
 
-import java.lang.Thread.yield
-
 private fun simpleFibonacci(a: Int): Long = if (a <= 1) 1 else simpleFibonacci(a - 1) + simpleFibonacci(a - 2)
 
 private val memo = mutableMapOf(0 to 1L, 1 to 1L)
