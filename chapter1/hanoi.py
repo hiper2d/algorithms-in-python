@@ -13,8 +13,8 @@ class Stack(Generic[T]):
     def pop(self) -> T:
         return self._container.pop()
 
-    def __repr__(self):
-        repr(self._container)
+    def __repr__(self) -> str:
+        return repr(self._container)
 
 
 def hanoi(begin: Stack[int], end: Stack[int], temp: Stack[int], n: int) -> None:
@@ -27,7 +27,14 @@ def hanoi(begin: Stack[int], end: Stack[int], temp: Stack[int], n: int) -> None:
 
 
 if __name__ == "__main__":
-    stack = Stack()
-    stack.push(1)
-    stack.push(2)
-    print(stack.pop())
+    stack_a: Stack[int] = Stack()
+    stack_b: Stack[int] = Stack()
+    stack_c: Stack[int] = Stack()
+    stack_a.push(3)
+    stack_a.push(2)
+    stack_a.push(1)
+    print(stack_a)
+    hanoi(stack_a, stack_c, stack_b, 3)
+    print(stack_a)
+    print(stack_b)
+    print(stack_c)
