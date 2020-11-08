@@ -17,6 +17,15 @@ class Stack(Generic[T]):
         repr(self._container)
 
 
+def hanoi(begin: Stack[int], end: Stack[int], temp: Stack[int], n: int) -> None:
+    if n == 1:
+        end.push(begin.pop())
+    else:
+        hanoi(begin, temp, end, n-1)
+        hanoi(begin, end, temp, 1)
+        hanoi(temp, end, begin, n-1)
+
+
 if __name__ == "__main__":
     stack = Stack()
     stack.push(1)
