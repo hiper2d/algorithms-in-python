@@ -18,5 +18,14 @@ def string_to_gene(g_str: str) -> Gene:
     return gene
 
 
+def linear_search(g: Gene, conon: Codon) -> bool:
+    for c in g:
+        if c == conon:
+            return True
+    return False
+
+
 if __name__ == "__main__":
-    print(string_to_gene(gene_str))
+    gene: Gene = string_to_gene(gene_str)
+    codon_agg = (Nucleotide.A, Nucleotide.G, Nucleotide.G)
+    print(linear_search(gene, codon_agg))
