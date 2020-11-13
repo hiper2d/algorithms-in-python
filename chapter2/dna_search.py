@@ -18,14 +18,30 @@ def string_to_gene(g_str: str) -> Gene:
     return gene
 
 
-def linear_search(g: Gene, conon: Codon) -> bool:
+def contains_linear(g: Gene, codon: Codon) -> bool:
     for c in g:
-        if c == conon:
+        if c == codon:
             return True
     return False
 
 
+def contains_binary(g: Gene, codon: Codon) -> bool:
+    low = 0
+    high = len(g) - 1
+    while True:
+        if low >= high:
+            return False
+        mid = (high + low) // 2
+        if g[mid] > codon:
+            low = mid + 1
+        elif g[mid] < codon:
+            high = mid - 1
+        else:
+            return True
+
+
 if __name__ == "__main__":
     gene: Gene = string_to_gene(gene_str)
-    codon_agg = (Nucleotide.A, Nucleotide.G, Nucleotide.G)
-    print(linear_search(gene, codon_agg))
+    print(contains_linear(gene, (Nucleotide.A, Nucleotide.G, Nucleotide.G)))
+    gene_sorted = sorted(gene)
+    print(contains_binary(gene, (Nucleotide.C, Nucleotide.G, Nucleotide.C)))
