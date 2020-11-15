@@ -28,9 +28,7 @@ def contains_linear(g: Gene, codon: Codon) -> bool:
 def contains_binary(g: Gene, codon: Codon) -> bool:
     low = 0
     high = len(g) - 1
-    while True:
-        if low >= high:
-            return False
+    while low <= high:
         mid = (high + low) // 2
         if g[mid] > codon:
             low = mid + 1
@@ -38,6 +36,7 @@ def contains_binary(g: Gene, codon: Codon) -> bool:
             high = mid - 1
         else:
             return True
+    return False
 
 
 if __name__ == "__main__":
