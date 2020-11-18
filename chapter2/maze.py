@@ -39,6 +39,21 @@ class Maze:
             output += ''.join([c.value for c in row]) + '\n'
         return output
 
+    def successors(self, current_location: MazeLocation) -> List[MazeLocation]:
+        locations: List[MazeLocation] = []
+        if current_location.row + 1 < self._rows \
+                and self._grid[current_location.row+1][current_location.column] != Cell.BLOCKED:
+            locations.append(MazeLocation(current_location.row+1, current_location.column))
+        elif current_location.row - 1 >= 0 \
+                and self._grid[current_location.row - 1][current_location.column] != Cell.BLOCKED:
+            locations.append(MazeLocation(current_location.row-1, current_location.column))
+        elif current_location.column + 1 < self._columns \
+                and self._grid[current_location.row][current_location.column + 1] != Cell.BLOCKED:
+            locations.append(MazeLocation(current_location.row, current_location.column+1))
+        elif current_location.column - 1 >= 0 and \
+                self._grid[current_location.row][current_location.column - 1] != Cell.BLOCKED:
+            locations.append(MazeLocation(current_location.row, current_location.column-1))
+
     def _randomly_fill(self, rows: int, columns: int, sparseness: float) -> None:
         for r in range(rows):
             for c in range(columns):
