@@ -1,4 +1,4 @@
-from typing import Protocol, TypeVar, Iterable, Any, Sequence
+from typing import Protocol, TypeVar, Iterable, Any, Sequence, Generic, List
 
 T = TypeVar('T')
 
@@ -42,6 +42,24 @@ def binary_contains(sequence: Sequence[C], key: C) -> bool:
         else:
             return True
     return False
+
+
+class Stack(Generic[T]):
+    def __init__(self):
+        self._container: List[T] = []
+
+    @property
+    def empty(self) -> bool:
+        return not self._container
+    
+    def push(self, item: T) -> None:
+        self._container.append(T)
+
+    def pop(self) -> T:
+        return self._container.pop()
+
+    def __repr__(self):
+        return repr(self._container)
 
 
 if __name__ == "__main__":
