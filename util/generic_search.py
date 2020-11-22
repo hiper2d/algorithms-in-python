@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Protocol, TypeVar, Iterable, Any, Sequence, Generic, List, Optional
+from typing import Protocol, TypeVar, Iterable, Any, Sequence, Generic, List, Optional, Callable, Set
 
 T = TypeVar('T')
 
@@ -73,6 +73,22 @@ class Node(Generic[T]):
 
     def __lt__(self, other: Node) -> bool:
         return (self.cost + self.heuristic) < (other.cost + other.heuristic)
+
+
+def dfs(initial_location: T, goal_test: Callable[[T], bool], successors: Callable[[T], List[T]]) -> Optional[Node[T]]:
+    frontier: Stack[Node[T]] = Stack()
+    frontier.push(Node(initial_location, None))
+    explored: Set[T] = {initial_location}
+    while not frontier.empty:
+        current_node: Node = frontier.pop()
+        current_state: T = current_node.state
+        if goal_test(current_node):
+            return current_node
+        for successor in successors(current_state):
+            if successor not in explored:
+                frontier.push(Node(successor, current_node))
+                explored.add(current_state)
+    return None
 
 
 if __name__ == "__main__":
