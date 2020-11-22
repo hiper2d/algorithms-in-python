@@ -54,6 +54,9 @@ class Maze:
                 self._grid[current_location.row][current_location.column - 1] != Cell.BLOCKED:
             locations.append(MazeLocation(current_location.row, current_location.column-1))
 
+    def goal_test(self, current_location: MazeLocation) -> bool:
+        return self.goal == current_location
+
     def _randomly_fill(self, rows: int, columns: int, sparseness: float) -> None:
         for r in range(rows):
             for c in range(columns):
