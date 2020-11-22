@@ -91,6 +91,14 @@ def dfs(initial_location: T, goal_test: Callable[[T], bool], successors: Callabl
     return None
 
 
+def path_to_node(node: Node[T]) -> List[T]:
+    path: List[T] = [node.state]
+    while node.parent is not None:
+        node = node.parent
+        path.append(node.state)
+    path.reverse()
+    return path
+
 if __name__ == "__main__":
     print(linear_contains([1, 5, 15, 15, 15, 15, 20], 5))
     print(binary_contains(["a", "d", "e", "f", "z"], "f"))
