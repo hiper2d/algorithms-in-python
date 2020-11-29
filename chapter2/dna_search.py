@@ -9,13 +9,13 @@ gene_str = "ATGCGCTAGCTAGCTAGCTAGCATATATCGATCAGCTACGATCAGCTACGATCGATGCATGCATGCTA
 
 
 def string_to_gene(g_str: str) -> Gene:
-    gene: Gene = []
+    g: Gene = []
     for i in range(0, len(g_str), 3):
         if i + 2 > len(g_str):
-            return gene
+            return g
         codon: Codon = (Nucleotide[g_str[i]], Nucleotide[g_str[i+1]], Nucleotide[g_str[i+2]])
-        gene.append(codon)
-    return gene
+        g.append(codon)
+    return g
 
 
 def contains_linear(g: Gene, codon: Codon) -> bool:

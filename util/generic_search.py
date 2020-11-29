@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Protocol, TypeVar, Iterable, Any, Sequence, Generic, List, Optional, Callable, Set
+from typing import TypeVar, Iterable, Any, Sequence, Generic, List, Optional, Callable, Set, Protocol
 
 T = TypeVar('T')
 
@@ -12,7 +12,7 @@ def linear_contains(iterable: Iterable[T], key: T) -> bool:
     return False
 
 
-C = TypeVar('C', bound='Comparable')
+C = TypeVar('C', bound=Optional['Comparable'])
 
 
 class Comparable(Protocol):
@@ -55,7 +55,7 @@ class Stack(Generic[T]):
         return not self._container
 
     def push(self, item: T) -> None:
-        self._container.append(T)
+        self._container.append(item)
         
     def pop(self) -> T:
         return self._container.pop()
@@ -77,10 +77,11 @@ class Node(Generic[T]):
 
 def dfs(initial_location: T, goal_test: Callable[[T], bool], successors: Callable[[T], List[T]]) -> Optional[Node[T]]:
     frontier: Stack[Node[T]] = Stack()
-    frontier.push(Node(initial_location, None))
+    node = Node(initial_location, None)
+    frontier.push(node)
     explored: Set[T] = {initial_location}
     while not frontier.empty:
-        current_node: Node = frontier.pop()
+        current_node: Node[T] = frontier.pop()
         current_state: T = current_node.state
         if goal_test(current_node):
             return current_node
@@ -98,6 +99,7 @@ def path_to_node(node: Node[T]) -> List[T]:
         path.append(node.state)
     path.reverse()
     return path
+
 
 if __name__ == "__main__":
     print(linear_contains([1, 5, 15, 15, 15, 15, 20], 5))

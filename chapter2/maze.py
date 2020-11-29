@@ -1,6 +1,8 @@
 import random
 from enum import Enum
-from typing import NamedTuple, List
+from typing import NamedTuple, List, Optional
+
+from util.generic_search import dfs, Node, path_to_node
 
 
 class Cell(str, Enum):
@@ -44,18 +46,31 @@ class Maze:
         if current_location.row + 1 < self._rows \
                 and self._grid[current_location.row+1][current_location.column] != Cell.BLOCKED:
             locations.append(MazeLocation(current_location.row+1, current_location.column))
-        elif current_location.row - 1 >= 0 \
+        if current_location.row - 1 >= 0 \
                 and self._grid[current_location.row - 1][current_location.column] != Cell.BLOCKED:
             locations.append(MazeLocation(current_location.row-1, current_location.column))
-        elif current_location.column + 1 < self._columns \
+        if current_location.column + 1 < self._columns \
                 and self._grid[current_location.row][current_location.column + 1] != Cell.BLOCKED:
             locations.append(MazeLocation(current_location.row, current_location.column+1))
-        elif current_location.column - 1 >= 0 and \
+        if current_location.column - 1 >= 0 and \
                 self._grid[current_location.row][current_location.column - 1] != Cell.BLOCKED:
             locations.append(MazeLocation(current_location.row, current_location.column-1))
+        return locations
 
     def goal_test(self, current_location: MazeLocation) -> bool:
         return self.goal == current_location
+
+    def mark(self, p: List[MazeLocation]):
+        for location in p:
+            self._grid[location.row][location.column] = Cell.PATH
+        self._grid[self.start.row][self.start.column] = Cell.START
+        self._grid[self.goal.row][self.goal.column] = Cell.GOAL
+
+    def clear(self, p: List[MazeLocation]):
+        for location in p:
+            self._grid[location.row][location.column] = Cell.EMPTY
+        self._grid[self.start.row][self.start.column] = Cell.START
+        self._grid[self.goal.row][self.goal.column] = Cell.GOAL
 
     def _randomly_fill(self, rows: int, columns: int, sparseness: float) -> None:
         for r in range(rows):
@@ -67,4 +82,12 @@ class Maze:
 if __name__ == "__main__":
     maze: Maze = Maze()
     print(maze)
+    solution1: Optional[Node[MazeLocation]] = dfs(maze.start, maze.goal_test, maze.successors)
+    if solution1 is None:
+        print('There is not path')
+    else:
+        path: List[MazeLocation] = path_to_node(solution1)
+        maze.mark(path)
+        print(maze)
+        maze.clear(path)
 
