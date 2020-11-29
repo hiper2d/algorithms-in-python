@@ -72,6 +72,9 @@ class Maze:
         self._grid[self.start.row][self.start.column] = Cell.START
         self._grid[self.goal.row][self.goal.column] = Cell.GOAL
 
+    def get_cell(self, location: MazeLocation) -> Cell:
+        return self._grid[location.row][location.column]
+
     def _randomly_fill(self, rows: int, columns: int, sparseness: float) -> None:
         for r in range(rows):
             for c in range(columns):
