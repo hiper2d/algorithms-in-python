@@ -2,7 +2,7 @@ import random
 from enum import Enum
 from typing import NamedTuple, List, Optional
 
-from util.generic_search import dfs, Node, path_to_node
+from util.generic_search import dfs, Node, path_to_node, bfs
 
 
 class Cell(str, Enum):
@@ -85,7 +85,7 @@ class Maze:
 if __name__ == "__main__":
     maze: Maze = Maze()
     print(maze)
-    solution1: Optional[Node[MazeLocation]] = dfs(maze.start, maze.goal_test, maze.successors)
+    solution1: Optional[Node[MazeLocation]] = bfs(maze.start, maze.goal_test, maze.successors)
     if solution1 is None:
         print('There is not path')
     else:

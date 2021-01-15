@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TypeVar, Iterable, Any, Sequence, Generic, List, Optional, Callable, Set, Protocol
+from typing import TypeVar, Iterable, Any, Sequence, Generic, Optional, Callable, Set, Protocol, List, Deque
 
 T = TypeVar('T')
 
@@ -64,6 +64,24 @@ class Stack(Generic[T]):
         return repr(self._container)
 
 
+class Queue(Generic[T]):
+    def __init__(self) -> None:
+        self._container: Deque[T] = Deque[T]()
+
+    @property
+    def empty(self) -> bool:
+        return not self._container
+
+    def push(self, item: T) -> None:
+        self._container.append(item)
+
+    def pop(self) -> T:
+        return self._container.popleft()
+
+    def __repr__(self):
+        return repr(self._container)
+
+
 class Node(Generic[T]):
     def __init__(self, state: T, parent: Optional[Node], cost: float = 0.0, heuristic: float = 0.0) -> None:
         self.state = state
@@ -77,6 +95,23 @@ class Node(Generic[T]):
 
 def dfs(initial_location: T, goal_test: Callable[[T], bool], successors: Callable[[T], List[T]]) -> Optional[Node[T]]:
     frontier: Stack[Node[T]] = Stack()
+    node = Node(initial_location, None)
+    frontier.push(node)
+    explored: Set[T] = {initial_location}
+    while not frontier.empty:
+        current_node: Node[T] = frontier.pop()
+        current_state: T = current_node.state
+        if goal_test(current_node.state):
+            return current_node
+        for successor in successors(current_state):
+            if successor not in explored:
+                frontier.push(Node(successor, current_node))
+                explored.add(current_state)
+    return None
+
+
+def bfs(initial_location: T, goal_test: Callable[[T], bool], successors: Callable[[T], List[T]]) -> Optional[Node[T]]:
+    frontier: Queue[Node[T]] = Queue()
     node = Node(initial_location, None)
     frontier.push(node)
     explored: Set[T] = {initial_location}
