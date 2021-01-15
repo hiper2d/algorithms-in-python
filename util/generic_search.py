@@ -83,7 +83,7 @@ def dfs(initial_location: T, goal_test: Callable[[T], bool], successors: Callabl
     while not frontier.empty:
         current_node: Node[T] = frontier.pop()
         current_state: T = current_node.state
-        if goal_test(current_node):
+        if goal_test(current_node.state):
             return current_node
         for successor in successors(current_state):
             if successor not in explored:
