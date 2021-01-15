@@ -85,12 +85,22 @@ class Maze:
 if __name__ == "__main__":
     maze: Maze = Maze()
     print(maze)
-    solution1: Optional[Node[MazeLocation]] = bfs(maze.start, maze.goal_test, maze.successors)
+    solution1: Optional[Node[MazeLocation]] = dfs(maze.start, maze.goal_test, maze.successors)
+
     if solution1 is None:
-        print('There is not path')
+        print('There is not path found with DFS')
     else:
-        path: List[MazeLocation] = path_to_node(solution1)
-        maze.mark(path)
+        path1: List[MazeLocation] = path_to_node(solution1)
+        maze.mark(path1)
         print(maze)
-        maze.clear(path)
+        maze.clear(path1)
+
+    solution2: Optional[Node[MazeLocation]] = bfs(maze.start, maze.goal_test, maze.successors)
+    if solution2 is None:
+        print('There is not path found with BFS')
+    else:
+        path2: List[MazeLocation] = path_to_node(solution2)
+        maze.mark(path2)
+        print(maze)
+        maze.clear(path2)
 
