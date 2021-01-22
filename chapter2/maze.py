@@ -83,6 +83,8 @@ class Maze:
 
 
 if __name__ == "__main__":
+    print('u\004b')
+
     maze: Maze = Maze()
     print(maze)
     solution1: Optional[Node[MazeLocation]] = dfs(maze.start, maze.goal_test, maze.successors)

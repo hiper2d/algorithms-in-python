@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from heapq import heappush, heappop
 from typing import TypeVar, Iterable, Any, Sequence, Generic, Optional, Callable, Set, Protocol, List, Deque
 
 T = TypeVar('T')
@@ -78,7 +79,25 @@ class Queue(Generic[T]):
     def pop(self) -> T:
         return self._container.popleft()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
+        return repr(self._container)
+
+
+class PriorityQueue(Generic[T]):
+    def __init__(self):
+        self._container: List[T] = []
+
+    @property
+    def empty(self) -> bool:
+        return not self._container
+
+    def push(self, item: T) -> None:
+        heappush(self._container, item)
+
+    def pop(self) -> T:
+        return heappop(self._container)
+
+    def __repr__(self) -> str:
         return repr(self._container)
 
 
