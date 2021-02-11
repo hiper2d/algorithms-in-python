@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from heapq import heappush, heappop
-from typing import TypeVar, Iterable, Any, Sequence, Generic, Optional, Callable, Set, Protocol, List, Deque
+from typing import TypeVar, Iterable, Any, Sequence, Generic, Optional, Callable, Set, Protocol, List, Deque, Dict
 
 T = TypeVar('T')
 
@@ -143,6 +143,17 @@ def bfs(initial_location: T, goal_test: Callable[[T], bool], successors: Callabl
             if successor not in explored:
                 frontier.push(Node(successor, current_node))
                 explored.add(current_state)
+    return None
+
+
+def astar(initial: T, goal_test: Callable[[T], bool], successors: Callable[[T], List[T]],
+          heuristic: Callable[[T], float]) -> Optional[Node[T]]:
+    frontier: PriorityQueue[Node[T]] = PriorityQueue()
+    frontier.push(Node(initial, None, 0.0, heuristic(initial)))
+    explored: Dict[Node[T], float] = {initial: 0.0}
+    while not frontier.empty:
+        current = frontier.pop()
+        # explored.
     return None
 
 

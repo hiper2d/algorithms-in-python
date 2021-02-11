@@ -1,6 +1,7 @@
 import random
 from enum import Enum
-from typing import NamedTuple, List, Optional
+from math import sqrt
+from typing import NamedTuple, List, Optional, Callable
 
 from util.generic_search import dfs, Node, path_to_node, bfs
 
@@ -80,6 +81,22 @@ class Maze:
             for c in range(columns):
                 if random.uniform(0, 1.0) <= sparseness:
                     self._grid[r][c] = Cell.BLOCKED
+
+
+def euclidean_search(goal: MazeLocation) -> Callable[[MazeLocation], float]:
+    def distance(current: MazeLocation) -> float:
+        x_dist = goal.row - current.row
+        y_dist = goal.column - current.column
+        return sqrt((x_dist * x_dist) + (y_dist * y_dist))
+    return distance
+
+
+def manhattan_search(goal: MazeLocation) -> Callable[[MazeLocation], float]:
+    def distance(current: MazeLocation) -> float:
+        x_dist = abs(goal.row - current.row)
+        y_dist = abs(goal.column - current.column)
+        return x_dist + y_dist
+    return distance
 
 
 if __name__ == "__main__":
