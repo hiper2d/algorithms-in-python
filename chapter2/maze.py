@@ -3,7 +3,7 @@ from enum import Enum
 from math import sqrt
 from typing import NamedTuple, List, Optional, Callable
 
-from util.generic_search import dfs, Node, path_to_node, bfs
+from util.generic_search import dfs, Node, path_to_node, bfs, astar
 
 
 class Cell(str, Enum):
@@ -104,8 +104,8 @@ if __name__ == "__main__":
 
     maze: Maze = Maze()
     print(maze)
-    solution1: Optional[Node[MazeLocation]] = dfs(maze.start, maze.goal_test, maze.successors)
 
+    solution1: Optional[Node[MazeLocation]] = dfs(maze.start, maze.goal_test, maze.successors)
     if solution1 is None:
         print('There is not path found with DFS')
     else:
@@ -122,4 +122,14 @@ if __name__ == "__main__":
         maze.mark(path2)
         print(maze)
         maze.clear(path2)
+
+    distance: Callable[[MazeLocation], float] = manhattan_search(maze.goal)
+    solution3: Optional[Node[MazeLocation]] = astar(maze.start, maze.goal_test, maze.successors, distance)
+    if solution3 is None:
+        print('There is not path found with A*')
+    else:
+        path3: List[MazeLocation] = path_to_node(solution3)
+        maze.mark(path3)
+        print(maze)
+        maze.clear(path3)
 
