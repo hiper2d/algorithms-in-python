@@ -5,5 +5,31 @@ Code examples for the book *Classic Computer Science Problems in Python* by Davi
 
 ![Classic Computer Science Problems in Python Cover](cover.jpg)
 
-## Versioning and Packages
-The source code in this repository requires Python 3.7 and installation of the [typing_extensions](https://github.com/python/typing/tree/master/typing_extensions) package. Due to its extensive use of Python 3.7 features (data classes, advanced type hints, etc.), most of the source code will not work with earlier versions of Python. You can install the `typing_extensions` package with `pip3 install typing_extensions` or `pip install typing_extensions` depending on your Python/pip setup.
+# Python Tips
+
+### Classes
+
+Generics, static fields and methods, properties
+```python
+from typing import Generic, TypeVar, List
+
+T = TypeVar('T')
+
+class AwesomeClassWithGenerics(Generic[T]):
+    static_field = 'ABC'
+    # AwesomeClassWithGenerics.static_field and AwesomeClassWithGenerics().static_field are different
+    # It's not possible to access static field via class instance variable
+    
+    def __init__(self, arg: T) -> None:
+        self._property: T = arg 
+
+    @staticmethod
+    def some_static_method(arg: List[T]):
+        ...
+
+    @property
+    def property(self) -> bool:
+        return not self._property
+```
+
+
