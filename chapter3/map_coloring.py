@@ -1,0 +1,30 @@
+from typing import List, Dict, Optional
+
+from chapter3.csp import CSP, MapColoringConstraint
+
+if __name__ == "__main__":
+    variables: List[str] = [
+        "Western Australia", "Northern Territory", "South Australia",
+        "Queensland", "New South Wales", "Victoria", "Tasmania"
+    ]
+    domains: Dict[str, List[str]] = {}
+    for var in variables:
+        domains[var] = ["red", "green", "blue"]
+
+    csp: CSP[str, str] = CSP(variables, domains)
+    csp.add_constraint(MapColoringConstraint("Western Australia", "Northern Territory"))
+    csp.add_constraint(MapColoringConstraint("Western Australia", "South Australia"))
+    csp.add_constraint(MapColoringConstraint("South Australia", "Northern Territory"))
+    csp.add_constraint(MapColoringConstraint("Queensland", "Northern Territory"))
+    csp.add_constraint(MapColoringConstraint("Queensland", "South Australia"))
+    csp.add_constraint(MapColoringConstraint("Queensland", "New South Wales"))
+    csp.add_constraint(MapColoringConstraint("New South Wales", "South Australia"))
+    csp.add_constraint(MapColoringConstraint("Victoria", "South Australia"))
+    csp.add_constraint(MapColoringConstraint("Victoria", "New South Wales"))
+    csp.add_constraint(MapColoringConstraint("Victoria", "Tasmania"))
+
+    solution: Optional[Dict[str, str]] = csp.backtrack_search()
+    if solution is None:
+        print("There is no solution")
+    else:
+        print(solution)
