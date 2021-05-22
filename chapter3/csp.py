@@ -16,6 +16,7 @@ class Constraint(Generic[V, D], ABC):
 
 
 class CSP(Generic[V, D]):
+
     def __init__(self, variables: List[V], domains: Dict[V, List[D]]):
         self.variables: List[V] = variables
         self.domains: Dict[V, List[D]] = domains
@@ -38,7 +39,10 @@ class CSP(Generic[V, D]):
                 return False
         return True
 
-    def backtrack_search(self, assignment: Dict[V, D] = {}) -> Optional[Dict[V, D]]:
+    def backtrack_search(self) -> Optional[Dict[V, D]]:
+        return self.__backtrack_search({})
+
+    def __backtrack_search(self, assignment: Dict[V, D]) -> Optional[Dict[V, D]]:
         if len(self.variables) == len(assignment):
             return assignment
         unassigned: List[V] = [v for v in self.variables if v not in assignment]
@@ -47,13 +51,20 @@ class CSP(Generic[V, D]):
             local_assignment = assignment.copy()
             local_assignment[first_variable] = domain
             if self.consistent(first_variable, local_assignment):
-                result: Optional[Dict[V, D]] = self.backtrack_search(local_assignment)
+                result: Optional[Dict[V, D]] = self.__backtrack_search(local_assignment)
                 if result is not None:
                     return result
         return None
 
 
+class MapColoringConstraint(Constraint[str, str]):
 
+    def __init__(self, place1: str, place2: str):
+        super().__init__([place1, place2])
+        self.place1: str = place1
+        self.place2: str = place2
 
-
-
+    def satisfied(self, assignment: Dict[str, str]) -> bool:
+        if self.place1 not in assignment or self.place2 not in assignment:
+            return True
+        return assignment[self.place1] != assignment[self.place2]
