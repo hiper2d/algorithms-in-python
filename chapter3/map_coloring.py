@@ -1,6 +1,20 @@
 from typing import List, Dict, Optional
 
-from chapter3.csp import CSP, MapColoringConstraint
+from chapter3.csp import CSP, Constraint
+
+
+class MapColoringConstraint(Constraint[str, str]):
+
+    def __init__(self, place1: str, place2: str):
+        super().__init__([place1, place2])
+        self.place1: str = place1
+        self.place2: str = place2
+
+    def satisfied(self, assignment: Dict[str, str]) -> bool:
+        if self.place1 not in assignment or self.place2 not in assignment:
+            return True
+        return assignment[self.place1] != assignment[self.place2]
+
 
 if __name__ == "__main__":
     variables: List[str] = [
