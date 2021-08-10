@@ -1,6 +1,6 @@
 from typing import List, NamedTuple, Dict, Optional
 
-from chapter3.csp import CSP, Constraint, V, D
+from chapter3.csp import CSP, Constraint
 
 Grid = List[List[int]]
 
@@ -21,13 +21,19 @@ class Chip(NamedTuple):
 
 
 class CircuitBoardLayoutConstraint(Constraint):
-    def __init__(self, chips: List[Chip]):
+    def __init__(self, grid_size: int, chips: List[Chip]):
         super().__init__(chips)
         self.chips = chips
+        self.grid_size = grid_size
 
-    def satisfied(self, assignment: Dict[V, D]) -> bool:
-        # todo: implement me
-        ...
+    def satisfied(self, assignment: Dict[Chip, ChipLocation]) -> bool:
+        chip_sum = 0
+        temp_grid: Grid = generate_grid(self.grid_size)
+        for (chip, chip_location) in assignment.items():
+            add_chip_to_circuit_for_print(temp_grid, chip_location)
+            chip_sum += chip.width * chip.height
+        circuit_sum = sum(sum(r) for r in temp_grid)
+        return circuit_sum == chip_sum
 
 
 def generate_grid(size: int) -> Grid:
@@ -37,6 +43,16 @@ def generate_grid(size: int) -> Grid:
 def print_grid(grid: Grid):
     for row in grid:
         print(row)
+
+
+def add_chip_to_circuit_for_print(grid: Grid, chip: ChipLocation):
+    r1: int = chip.top_left.row
+    r2: int = chip.bottom_right.row
+    c1: int = chip.top_left.column
+    c2: int = chip.bottom_right.column
+    for r in range(r1, r2 + 1):
+        for c in range(c1, c2 + 1):
+            grid[r][c] = 1
 
 
 def place_chip_onto_circuit(grid_size: int, locations: List[ChipLocation],
@@ -63,19 +79,20 @@ def generate_domain(grid: Grid, chip: Chip) -> List[ChipLocation]:
 
 
 if __name__ == '__main__':
-    circuit: Grid = generate_grid(10)
-    print_grid(circuit)
-    chips: List[Chip] = [Chip(3, 3), Chip(3, 3), Chip(9, 2), Chip(1, 5)]
+    grid_size = 10
+    circuit: Grid = generate_grid(grid_size)
+    chips: List[Chip] = [Chip(3, 3), Chip(3, 2), Chip(9, 2), Chip(1, 5)]
     chip_locations: Dict[Chip, List[ChipLocation]] = {}
     for chip in chips:
         chip_locations[chip] = generate_domain(circuit, chip)
     csp: CSP[Chip, ChipLocation] = CSP(chips, chip_locations)
-    csp.add_constraint(CircuitBoardLayoutConstraint(chips))
+    csp.add_constraint(CircuitBoardLayoutConstraint(grid_size, chips))
     solution: Optional[Dict[Chip, ChipLocation]] = csp.backtrack_search()
     if solution is None:
         print('There is not solution')
     else:
-        # todo: replace 0 with 1 for each chip in circuit
+        for (chip, location) in solution.items():
+            add_chip_to_circuit_for_print(circuit, location)
         print_grid(circuit)
 
 
