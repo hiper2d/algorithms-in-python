@@ -16,6 +16,7 @@ class ChipLocation(NamedTuple):
 
 
 class Chip(NamedTuple):
+    id: int
     width: int
     height: int
 
@@ -81,7 +82,7 @@ def generate_domain(grid: Grid, chip: Chip) -> List[ChipLocation]:
 if __name__ == '__main__':
     grid_size = 10
     circuit: Grid = generate_grid(grid_size)
-    chips: List[Chip] = [Chip(3, 3), Chip(3, 2), Chip(9, 2), Chip(1, 5)]
+    chips: List[Chip] = [Chip(0, 3, 3), Chip(1, 3, 2), Chip(2, 9, 2), Chip(3, 1, 5), Chip(4, 9, 2), Chip(5, 10, 1)]
     chip_locations: Dict[Chip, List[ChipLocation]] = {}
     for chip in chips:
         chip_locations[chip] = generate_domain(circuit, chip)
