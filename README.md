@@ -5,6 +5,12 @@ Code examples for the book *Classic Computer Science Problems in Python* by Davi
 
 ![Classic Computer Science Problems in Python Cover](cover.jpg)
 
+This project has a root which is a common for all chapters. For that reason, all imports start from `chapterX.file`. To run something from the console you need to set the environment variable with the root path:
+```bash
+export PYTHONPATH=/path-to-projects/classic-computer-science-problems-in-python
+```
+But I run everything including unit tests from the Intellij Idea where the project has a configured root.
+
 # Python Tips
 
 ### Classes
@@ -64,5 +70,29 @@ class MapColoringConstraint(Constraint[str, str]):
             return True
         return assignment[self.place1] != assignment[self.place2]
 ```
+Data Class and future module
+```python
+from __future__ import annotations
+from dataclasses import dataclass
 
+# A class marked with the @dataclass decorator saves some tedium
+# by automatically creating an __init__() method that instantiates instance 
+# variables for any variables declared with type annotations in the class’s body. 
+# Dataclasses can also automatically create other special methods for a class. 
+# Which special methods are automatically created is configurable via the decorator. 
+# See the Python documentation on dataclasses for details (https://docs.python.org/3/library/dataclasses.html).
+# In short, a dataclass is a way of saving ourselves some typing.
 
+@dataclass
+class Edge:
+    u: int # the "from" vertex
+    v: int # the "to" vertex
+
+    # The method return the Edge class instance which is legal because the class 
+    # is not yet defined. The __future__ import solves this problem.
+    def reversed(self) -> Edge:
+        return Edge(self.v, self.u)
+
+    def __str__(self) -> str:
+        return f"{self.u} -> {self.v}"
+```
