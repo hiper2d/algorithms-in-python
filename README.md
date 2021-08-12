@@ -83,7 +83,7 @@ from dataclasses import dataclass
 # See the Python documentation on dataclasses for details (https://docs.python.org/3/library/dataclasses.html).
 # In short, a dataclass is a way of saving ourselves some typing.
 
-@dataclass
+@dataclass(eq=True, frozen=True)  # immutable, hashable
 class Edge:
     u: int # the "from" vertex
     v: int # the "to" vertex
