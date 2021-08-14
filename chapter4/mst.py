@@ -1,37 +1,45 @@
-from typing import TypeVar, Generic, List, Tuple
+from typing import TypeVar, List, Optional
 
-from chapter4.graph import Graph
 from chapter4.weighted_edge import WeightedEdge
+from chapter4.weighted_graph import WeightedGraph
+from util.generic_search import PriorityQueue
 
 V = TypeVar('V')
+WeightedPath = List[WeightedEdge]
 
 
-class WeightedGraph(Generic[V], Graph[V]):
-    def __init__(self, vertices: List[V] = []):
-        self._vertices: List[V] = vertices
-        self._edges: List[List[WeightedEdge]] = [[] for _ in vertices]
+def total_weight(wp: WeightedPath) -> float:
+    return sum([e.weight for e in wp])
 
-    def add_edge_by_indices(self, u: int, v: int, weight: float):
-        edge: WeightedEdge = WeightedEdge(u, v, weight)
-        self.add_edge(edge)
 
-    def add_edge_by_vertices(self, first: V, second: V, weight: float):
-        u: int = self._vertices.index(first)
-        v: int = self._vertices.index(second)
-        self.add_edge_by_indices(u, v, weight)
+def mst(wg: WeightedGraph, start: int = 0) -> Optional[WeightedPath]:
+    if start > wg.vertex_count - 1 or start < 0:
+        return None
+    visited: [bool] = [False] * wg.vertex_count
+    mst_path: WeightedPath = []
+    queue: PriorityQueue[WeightedEdge] = PriorityQueue()
 
-    def neighbors_for_index_with_weights(self, index: int) -> List[Tuple[V, float]]:
-        distance_tuples: List[Tuple[V, float]] = []
-        edges: List[WeightedEdge] = self.edges_for_index(index)
+    def visit(index: int):
+        visited[index] = True
+        edges: List[WeightedEdge] = wg.edges_for_index(index)
         for e in edges:
-            distance_tuples.append((self.vertex_at(e.v), e.weight))
-        return distance_tuples
+            if not visited[e.v]:
+                queue.push(e)
 
-    def __str__(self) -> str:
-        desc: str = ""
-        for i in range(self.vertex_count):
-            desc += f"{self.vertex_at(i)} -> {self.neighbors_for_index_with_weights(i)}\n"
-        return desc
+    visit(start)
+    while not queue.empty:
+        edge: WeightedEdge = queue.pop()
+        if visited[edge.v]:
+            continue
+        mst_path.append(edge)
+        visit(edge.v)
+    return mst_path
+
+
+def print_weighted_path(wg: WeightedGraph, wp: WeightedPath):
+    for edge in wp:
+        print(f"{wg.vertex_at(edge.u)} {edge.weight} > {wg.vertex_at(edge.v)}")
+    print(f"Total Weight: {total_weight(wp)}")
 
 
 if __name__ == "__main__":
@@ -66,6 +74,8 @@ if __name__ == "__main__":
     city_graph.add_edge_by_vertices("Philadelphia", "Washington", 123)
     print(city_graph)
 
-
-
-
+    result: Optional[WeightedPath] = mst(city_graph)
+    if result is None:
+        print("There is no solution")
+    else:
+        print_weighted_path(city_graph, result)
