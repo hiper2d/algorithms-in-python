@@ -17,9 +17,11 @@ But I run everything including unit tests from the Intellij Idea where the proje
 
 Generics, static fields and methods, properties
 ```python
+from __future__ import annotations
 from typing import Generic, TypeVar, List
 
-T = TypeVar('T')
+# TypeVar T is bound to AwesomeClassWithGenerics. This means that anything that fills in a variable that is of type T must be an instance of a AwesomeClassWithGenerics or a subclass of AwesomeClassWithGenerics
+T = TypeVar('T', bound='AwesomeClassWithGenerics') # it's a string but it can be imported class name
 
 class AwesomeClassWithGenerics(Generic[T]):
     static_field = 'ABC'
@@ -37,6 +39,38 @@ class AwesomeClassWithGenerics(Generic[T]):
     def property(self) -> bool:
         return not self._property
 ```
+Staticmethod vs classmethod
+```python
+class A(object):
+    # Below is the usual way an object instance calls a method. The object instance, a, is implicitly passed as the first argument
+    def foo(self, x):
+        print(f"executing foo({self}, {x})")
+    # a.foo(1)
+    # executing foo(<__main__.A object at 0xb7dbef0c>, 1)
+
+    # With classmethods, the class of the object instance is implicitly passed as the first argument instead of self
+    @classmethod
+    def class_foo(cls, x):
+        print(f"executing class_foo({cls}, {x})")
+    # a.class_foo(1)
+    # executing class_foo(<class '__main__.A'>, 1)
+    # or
+    # A.class_foo(1)
+    # executing class_foo(<class '__main__.A'>, 1)
+
+    # With staticmethods, neither self (the object instance) nor cls (the class) is implicitly passed as the first argument. They behave like plain functions except that you can call them from an instance or the class
+    @staticmethod
+    def static_foo(x):
+        print(f"executing static_foo({x})")
+    # a.static_foo(1)
+    # executing static_foo(1)
+    # or
+    # A.static_foo('hi')
+    # executing static_foo(hi)
+
+a = A()
+```
+
 Inheritance
 ```python
 from abc import ABC, abstractmethod
@@ -95,4 +129,45 @@ class Edge:
 
     def __str__(self) -> str:
         return f"{self.u} -> {self.v}"
+```
+### Random
+```python
+from random import choice, choices, random, randrange
+from string import ascii_uppercase
+
+choice(ascii_uppercase) # random ascii uppercase char
+choice([True, False]) # random bool value
+choices([1,2,3], weights=[.2,.5,.9], k=2) # roulette-wheel selection of 2 items numbers from [1,2,3] taking items' weights into account
+random() # return float value from 0 to 1
+randrange(100) # int from 0 to 100
+```
+### Heap or Priority Queue
+
+I like this data structure, therefore I highlight some API for it in Python. It is min-heap.
+
+```python
+from heapq import heappush, heappop
+from typing import List, TypeVar, Generic
+
+T = TypeVar('T')
+
+class PriorityQueue(Generic[T]):
+    def __init__(self):
+        self._container: List[T] = []
+
+    @property
+    def empty(self) -> bool:
+        return not self._container
+
+    def push(self, item: T) -> None:
+        heappush(self._container, item)
+
+    def pop(self) -> T:
+        return heappop(self._container)
+```
+There are two convenient methods in heapq: nlargest/nsmallest
+```python
+from heapq import nlargest
+
+nlargest(2, [1,3,2])
 ```
