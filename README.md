@@ -132,14 +132,16 @@ class Edge:
 ```
 ### Random
 ```python
-from random import choice, choices, random, randrange
+from random import choice, choices, sample, random, randrange, shuffle
 from string import ascii_uppercase
 
 choice(ascii_uppercase) # random ascii uppercase char
 choice([True, False]) # random bool value
 choices([1,2,3], weights=[.2,.5,.9], k=2) # roulette-wheel selection of 2 items numbers from [1,2,3] taking items' weights into account
+sample([1,2,3], k=2) # same as choices but without replacement, i.e. selected item is removed and cannot be selected again
 random() # return float value from 0 to 1
 randrange(100) # int from 0 to 100
+shuffle([1,2,3,4])
 ```
 ### Heap or Priority Queue
 
