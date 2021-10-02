@@ -5,6 +5,7 @@ from random import shuffle, sample
 from typing import Tuple, Type, List
 
 from chapter5.chromosome import Chromosome, T
+from chapter5.genetic_algorithm import GeneticAlgorithm
 
 
 class SendMoreMoney2(Chromosome):
@@ -52,3 +53,16 @@ class SendMoreMoney2(Chromosome):
         money: int = 10_000 * m + 1000 * o + 100 * n + 10 * e + y
         diff: int = abs(money - (send + more))
         return send, more, money, diff
+
+
+if __name__ == "__main__":
+    initial_population: List[SendMoreMoney2] = [SendMoreMoney2.random_instance() for _ in range(1000)]
+    ga: GeneticAlgorithm = GeneticAlgorithm(initial_population=initial_population, max_generations=1000,
+                                            threshold=1.0, crossover_chance=.7, mutation_chance=.7,
+                                            selection_type=GeneticAlgorithm.SelectionType.ROULETTE)
+    result: SendMoreMoney2 = ga.run()
+    print(result)
+    # send = 3712
+    # more = 0467
+    # money = 04179
+
