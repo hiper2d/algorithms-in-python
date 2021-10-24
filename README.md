@@ -173,3 +173,36 @@ from heapq import nlargest
 
 nlargest(2, [1,3,2])
 ```
+
+### Nested for loops and array elements swaps
+
+Python has few tricks which were not intuitive for me as a Java developer
+
+Multiple for-loops can be combined in 1 line 
+```python
+outer = [1, 2, 3, 4]
+inner = ['a', 'b', 'c']
+
+[print(x, y) for x in outer for y in inner]
+# 1 a
+# 1 b
+# 1 c
+# 2 a
+# 2 b
+# 2 c
+# 3 a
+# 3 b
+# 3 c
+# 4 a
+# 4 b
+# 4 c
+
+# Another way for the same output
+for x in outer: [print(x, y) for y in inner]
+```
+
+Array elements swap
+```python
+arr = [1, 2, 3, 4]
+arr[1], arr[2] = arr[2], arr[1]
+```
