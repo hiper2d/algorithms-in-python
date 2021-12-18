@@ -9,6 +9,7 @@ from zlib import compress
 
 # 165 bytes compressed
 from chapter5.chromosome import Chromosome, T
+from chapter5.genetic_algorithm import GeneticAlgorithm
 
 PEOPLE: List[str] = ["Michael", "Sarah", "Joshua", "Narine", "David", "Sajid", "Melanie", "Daniel", "Wei", "Dean", "Brian", "Murat", "Lisa"]
 
@@ -51,3 +52,7 @@ class ListCompression(Chromosome):
 
 if __name__ == "__main__":
     initial_population: List[ListCompression] = [ListCompression.random_instance() for _ in range(1000)]
+    ga: GeneticAlgorithm = GeneticAlgorithm(initial_population=initial_population, threshold=.1, crossover_chance=.7,
+                                            mutation_chance=.2, selection_type=GeneticAlgorithm.SelectionType.TOURNAMENT)
+    result = ga.run()
+    print(result)
