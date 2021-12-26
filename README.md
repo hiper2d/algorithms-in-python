@@ -132,7 +132,7 @@ class Edge:
 ```
 ### Random
 ```python
-from random import choice, choices, sample, random, randrange, shuffle
+from random import choice, choices, sample, random, randrange, shuffle, uniform
 from string import ascii_uppercase
 
 choice(ascii_uppercase) # random ascii uppercase char
@@ -142,6 +142,7 @@ sample([1,2,3], k=2) # same as choices but without replacement, i.e. selected it
 random() # return float value from 0 to 1
 randrange(100) # int from 0 to 100
 shuffle([1,2,3,4])
+uniform(min([1,2,3,4]), max([1,2,3,4])) # returns a random floating number between the two specified numbers (both included)
 ```
 ### Heap or Priority Queue
 
@@ -205,4 +206,10 @@ Array elements swap
 ```python
 arr = [1, 2, 3, 4]
 arr[1], arr[2] = arr[2], arr[1]
+```
+
+```python
+# Iterate over a list with indices
+for index, letter in enumerate(['A', 'B', 'C']):
+    print(index, letter)
 ```
