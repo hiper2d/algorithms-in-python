@@ -5,10 +5,10 @@ from typing import List, Tuple, Iterable
 
 
 class DataPoint:
-    def __init__(self, initial: List[float]) -> None:
-        self._originals: Tuple[float, ...] = tuple(initial)
+    def __init__(self, initial_dimensions: List[float]) -> None:
+        self._originals: Tuple[float, ...] = tuple(initial_dimensions)
         # dimensions are supposed to be replaced with z_scored original values
-        self.dimensions: Tuple[float, ...] = tuple(initial)
+        self.dimensions: Tuple[float, ...] = tuple(initial_dimensions)
 
     def distance(self, other: DataPoint) -> float:
         pairs: Iterable[Tuple[float, float]] = zip(self.dimensions, other.dimensions)
