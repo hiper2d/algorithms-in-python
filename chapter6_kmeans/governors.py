@@ -1,7 +1,12 @@
-from typing import List
+from random import random
+from typing import List, Callable, Tuple
+
+import matplotlib.pyplot as plt
 
 from chapter6_kmeans.data_point import DataPoint
 from chapter6_kmeans.kmeans import KMeans
+
+RgbFunction = Callable[[], Tuple[float, float, float]]
 
 
 class Governor(DataPoint):
@@ -46,3 +51,10 @@ if __name__ == "__main__":
     gov_clusters: List[KMeans.Cluster] = kmeans.run()
     for index, cluster in enumerate(gov_clusters):
         print(f"Cluster {index}: {cluster.points}\n")
+
+    rand_color: RgbFunction = lambda: (random(), random(), random())
+    plt.scatter([x.longitude for x in gov_clusters[0].points], [x.age for x in gov_clusters[0].points], c=[rand_color()])
+    plt.scatter([x.longitude for x in gov_clusters[1].points], [x.age for x in gov_clusters[1].points], c=[rand_color()])
+    plt.xlabel("Longitude")
+    plt.ylabel("Age")
+    plt.show()
