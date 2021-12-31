@@ -9,3 +9,8 @@ def dot_product(sx: List[float], ys: List[float]) -> float:
 # the classic sigmoid activation function
 def sigmoid(x: float) -> float:
     return 1.0 / (1.0 + exp(-x))
+
+
+def derivative_sigmoid(x: float) -> float:
+    sig: float = sigmoid(x)
+    return sig * (1 - sig)
