@@ -5,6 +5,8 @@ Code examples for the book *Classic Computer Science Problems in Python* by Davi
 
 ![Classic Computer Science Problems in Python Cover](cover.jpg)
 
+The link to the official code examples is [here](https://github.com/davecom/ClassicComputerScienceProblemsInPython).
+
 This project has a root which is a common for all chapters. For that reason, all imports start from `chapterX.file`. To run something from the console you need to set the environment variable with the root path:
 ```bash
 export PYTHONPATH=/path-to-projects/classic-computer-science-problems-in-python
@@ -100,7 +102,7 @@ class MapColoringConstraint(Constraint[str, str]):
         self.place2: str = place2
 
     def satisfied(self, assignment: Dict[str, str]) -> bool:
-        if self.place1 is not in assignment or self.place2 is not in assignment:
+        if self.place1 not in assignment or self.place2 not in assignment:
             return True
         return assignment[self.place1] != assignment[self.place2]
 ```

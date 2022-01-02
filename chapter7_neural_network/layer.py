@@ -3,7 +3,7 @@ from __future__ import annotations
 from random import random
 from typing import Optional, List, Callable
 
-from chapter7_neural_network.neuro import Neuron
+from chapter7_neural_network.neuron import Neuron
 from chapter7_neural_network.util import dot_product
 
 
