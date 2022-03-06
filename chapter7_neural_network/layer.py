@@ -8,16 +8,16 @@ from chapter7_neural_network.util import dot_product
 
 
 class Layer:
-    def __init__(self, previous_layer: Optional[List[float]], num_neurons: int, learning_rate: float,
+    def __init__(self, previous_layer: Optional[Layer], num_neurons: int, learning_rate: float,
                  activation_function: Callable[[float], float],
                  derivative_activation_function: Callable[[float], float]) -> None:
-        self.previous_layer: Optional[List[float]] = previous_layer
+        self.previous_layer: Optional[Layer] = previous_layer
         self.neurons: List[Neuron] = []
         for i in range(num_neurons):
             if self.previous_layer is None:
                 random_weights: List[float] = []
             else:
-                random_weights = [random() for _ in range(len(self.previous_layer))]
+                random_weights = [random() for _ in range(len(previous_layer.neurons))]
             neuron: Neuron = Neuron(random_weights, learning_rate, activation_function, derivative_activation_function)
             self.neurons.append(neuron)
             self.output_cache: List[float] = [0.0] * len(self.neurons)
