@@ -1,3 +1,4 @@
+from functools import reduce
 from typing import List, Callable, TypeVar
 
 from chapter7_neural_network.layer import Layer
@@ -16,6 +17,11 @@ class Network:
         input_layer: Layer = Layer(None, layer_structure[0], learning_rate, activation_function,
                                    activation_function_derivative)
         self.layers.append(input_layer)
-        # for previous, num_neurons in enumerate(layer_structure[1::]):
+        for previous, num_neurons in enumerate(layer_structure[1::]):
+            next_layer: Layer = Layer(self.layers[previous], num_neurons, learning_rate=learning_rate,
+                                      activation_function=activation_function,
+                                      derivative_activation_function=activation_function_derivative)
+            self.layers.append(next_layer)
 
-
+    def outputs(self, input: List[float]) -> List[float]:
+        return reduce(lambda inputs, layer: layer.outputs(inputs), self.layers, input)
