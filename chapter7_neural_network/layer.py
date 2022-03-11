@@ -13,6 +13,7 @@ class Layer:
                  derivative_activation_function: Callable[[float], float]) -> None:
         self.previous_layer: Optional[Layer] = previous_layer
         self.neurons: List[Neuron] = []
+        # the following could all be one large list comprehension
         for i in range(num_neurons):
             if self.previous_layer is None:
                 random_weights: List[float] = []
@@ -29,11 +30,13 @@ class Layer:
             self.output_cache = [neuron.output(inputs) for neuron in self.neurons]
         return self.output_cache
 
+    # should only be called on output layer
     def calculate_deltas_for_output_layer(self, expected: List[float]) -> None:
         for n in range(len(self.neurons)):
             self.neurons[n].delta = self.neurons[n].derivative_activation_function(self.neurons[n].output_cache) * \
                 (expected[n] - self.neurons[n].output_cache)
 
+    # should not be called on output layer
     def calculate_deltas_for_hidden_layer(self, next_layer: Layer) -> None:
         for index, neuron in enumerate(self.neurons):
             next_weights: List[float] = [n.weights[index] for n in next_layer.neurons]
