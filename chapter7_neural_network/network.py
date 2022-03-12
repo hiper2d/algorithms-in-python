@@ -33,4 +33,16 @@ class Network:
     # Figures out each neuron's changes based on the errors of the output
     # versus the expected output
     def backpropagate(self, expected: List[float]) -> None:
-        pass
+        last_layer_idx = len(self.layers) - 1
+        self.layers[last_layer_idx].calculate_deltas_for_output_layer(expected)
+        for l in range(last_layer_idx - 1, 0, -1):
+            self.layers[l].calculate_deltas_for_hidden_layer(self.layers[l + 1])
+
+    # backpropagate() doesn't actually change any weight
+    # this function uses the deltas calculated by backpropagate() toa actually make changes to the wights
+    def update_weights(self) -> None:
+        for layer in self.layers[1:]: # skip input layer
+            for neuron in layer.neurons:
+                for w in range(len(neuron.weights)):
+                    neuron.weights[w] = neuron.weights[w] + \
+                                        neuron.learning_rate * layer.previous_layer.output_cache[w] * neuron.delta
