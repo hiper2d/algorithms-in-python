@@ -1,5 +1,5 @@
 from functools import reduce
-from typing import List, Callable, TypeVar
+from typing import List, Callable, TypeVar, Tuple
 
 from chapter7_neural_network.layer import Layer
 from chapter7_neural_network.util import sigmoid, derivative_sigmoid
@@ -46,3 +46,22 @@ class Network:
                 for w in range(len(neuron.weights)):
                     neuron.weights[w] = neuron.weights[w] + \
                                         neuron.learning_rate * layer.previous_layer.output_cache[w] * neuron.delta
+
+    # train() uses the result of outputs() run over many inputs and compares against expected
+    # to feed backpropagate() and update_weights()
+    def train(self, inputs: List[List[float]], expected: List[List[float]]) -> None:
+        for location, xs in enumerate(inputs):
+            ys: List[float] = expected[location]
+            outs: List[float] = self.outputs(xs)
+            self.backpropagate(ys)
+            self.update_weights()
+
+    def validate(self, inputs: List[List[float]], expected: List[T],
+                 interpret_output: Callable[[List[float]], T]) -> Tuple[int, int, float]:
+        correct: int = 0
+        for input, expected in zip(inputs, expected):
+            result: T = interpret_output(self.outputs(input))
+            if result == expected:
+                correct += 1
+        percentage: float = correct / len(inputs)
+        return correct, len(inputs), percentage
