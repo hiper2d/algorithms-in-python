@@ -1,4 +1,14 @@
-# classic-computer-science-problems-in-python
+The repo contains code practices from two books and some random algorithms and design tasks
+
+Each project has its own root which is a common for all chapters in the related book. For that reason, all imports start from `chapterX.file`. To run something from the console you need to set the environment variable with the right root path. For example:
+```bash
+export PYTHONPATH=/path-to-projects/algorithms-in-python/classic-computer-science-problems-in-python
+```
+But I run everything including unit tests from the Intellij Idea where the project has a configured root.
+
+
+# Classic Computer Science Problems in Python
+
 Codding parts for Classic Computer Science Problems in Python book
 
 Code examples for the book *Classic Computer Science Problems in Python* by David Kopec
@@ -7,13 +17,13 @@ Code examples for the book *Classic Computer Science Problems in Python* by Davi
 
 The link to the official code examples is [here](https://github.com/davecom/ClassicComputerScienceProblemsInPython).
 
-This project has a root which is a common for all chapters. For that reason, all imports start from `chapterX.file`. To run something from the console you need to set the environment variable with the root path:
-```bash
-export PYTHONPATH=/path-to-projects/classic-computer-science-problems-in-python
-```
-But I run everything including unit tests from the Intellij Idea where the project has a configured root.
+# Cracking the Coding Interview
 
-# Python Tips
+![Cracking the Coding Interview Cover](cracking-the-code-interview.png)
+
+All code tasks from this book are done in Python
+
+# Random Python Tips
 
 ### Classes
 

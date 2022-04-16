@@ -8,7 +8,7 @@ from typing import List, Tuple, Any, Type
 from zlib import compress
 
 # 165 bytes compressed
-from chapter5.chromosome import Chromosome, T
+from chapter5.chromosome import Chromosome
 from chapter5.genetic_algorithm import GeneticAlgorithm
 
 PEOPLE: List[str] = ["Michael", "Sarah", "Joshua", "Narine", "David", "Sajid", "Melanie", "Daniel", "Wei", "Dean", "Brian", "Murat", "Lisa"]

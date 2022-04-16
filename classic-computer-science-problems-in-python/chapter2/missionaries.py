@@ -3,7 +3,7 @@ from __future__ import annotations
 from builtins import staticmethod
 from typing import List, Optional
 
-from util.generic_search import bfs, Node, path_to_node, dfs
+from util.generic_search import bfs, Node, path_to_node
 
 MAX_NUM: int = 3
 

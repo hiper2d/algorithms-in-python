@@ -1,5 +1,5 @@
 import unittest
-from typing import List, Set
+from typing import Set
 
 from chapter4.edge import Edge
 from chapter4.graph import Graph
