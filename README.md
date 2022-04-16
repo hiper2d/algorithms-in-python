@@ -13,13 +13,13 @@ Codding parts for Classic Computer Science Problems in Python book
 
 Code examples for the book *Classic Computer Science Problems in Python* by David Kopec
 
-![Classic Computer Science Problems in Python Cover](cover.jpg)
+![Classic Computer Science Problems in Python Cover](covers/classic-computer-science-problems-in-python.jpg)
 
 The link to the official code examples is [here](https://github.com/davecom/ClassicComputerScienceProblemsInPython).
 
 # Cracking the Coding Interview
 
-![Cracking the Coding Interview Cover](cracking-the-code-interview.png)
+![Cracking the Coding Interview Cover](covers/cracking-the-code-interview.png)
 
 All code tasks from this book are done in Python
 
