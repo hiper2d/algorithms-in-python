@@ -9,7 +9,7 @@ def is_unique(s: str) -> bool:
 
 def is_unique_without_additional_data_structures(s: str) -> bool:
     s1 = list(s)
-    s1.sort()  # todo: how to sort strings?
+    s1.sort()  # better way is: ''.join(sorted(s))
     for i in range(1, len(s1)):
         if s1[i] == s1[i-1]:
             return False
