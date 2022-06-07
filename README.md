@@ -225,3 +225,26 @@ arr[1], arr[2] = arr[2], arr[1]
 for index, letter in enumerate(['A', 'B', 'C']):
     print(index, letter)
 ```
+
+### Main operations with collections
+
+List
+```python
+list = [1,2,3]
+list.append(4)
+list.extend([5, 6])
+list.insert(2, -1) # insert -1 at index 2 shifting elements to the right
+print(list.index(-1)) # search for -1 element and return its index which is 2
+list.remove(-1) # search for -1 element and removes it; throws ValueError if not present
+print(list.pop(4)) # remove and returns the element at the given index
+print(list.pop()) # remove and returns the last element
+
+list.reverse() # reverse the list in place (does not return it)
+list.sort() # sort the list in place (does not return it)
+
+print(sorted(list)) # return sorted copy (does not change original)
+
+list[1,2,3,4,5]
+print(list[1:-1]) # return [2,3,4]
+list[0,2] = 5 # replace [2,3] with 5, i.e. change list to [5,4]
+```
