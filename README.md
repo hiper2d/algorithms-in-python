@@ -248,3 +248,41 @@ list[1,2,3,4,5]
 print(list[1:-1]) # return [2,3,4]
 list[0,2] = 5 # replace [2,3] with 5, i.e. change list to [5,4]
 ```
+
+Queue
+```python
+from collections import deque
+
+q = deque()
+q.append('a')
+q.append('b')
+
+```
+
+Set
+```python
+set1 = {'a', 'b', 'c'}
+set2 = set() # empty set
+print('a' in set1)
+
+set1.add('d')
+set1.remove('b') # throws ValueError if not present
+set1.discard('b') # does not throw ValueError if not present
+set1.clear()
+
+set1.union(set2) # (set1 | set2) returns a new set with all elements from both sets
+set1.intersection(set2) # (set1 & set2) returns a new set with elements common to both sets
+set1.difference(set2) # (set1 - set2) returns a new set with elements in set1 but not in set2
+set1.symmetric_difference(set2) # (set1 ^ set2) returns a new set with elements in either set1 or set2 but not in both
+```
+
+### Main operations with string
+
+```python
+s = 'abc'
+s.zfill(5) # 'abc' -> '00abc'; adds zeros at the beginning of the string, until it reaches the specified length
+
+numStr = "5"
+numStrR = numStr.rjust(4, '-') # '5' -> '---5'; Make string right justified of length 4 by padding 3 spaces to left
+numStrL = numStr.rjust(4, '-') # '5' -> '5---'; Make string left justified of length 4 by padding 3 spaces to left
+```
