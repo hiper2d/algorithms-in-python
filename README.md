@@ -212,6 +212,11 @@ inner = ['a', 'b', 'c']
 
 # Another way for the same output
 for x in outer: [print(x, y) for y in inner]
+
+# filter list using for loop with condition
+a = [1,1,2,3]
+minimum = min(a)
+indices = [i for i, v in enumerate(a) if v == minimum]
 ```
 
 Array elements swap
@@ -242,6 +247,7 @@ print(list.pop()) # remove and returns the last element
 list.reverse() # reverse the list in place (does not return it)
 list.sort() # sort the list in place (does not return it)
 
+print(reversed(list)) # return reversed copy (does not change original)
 print(sorted(list)) # return sorted copy (does not change original)
 
 list[1,2,3,4,5]
@@ -249,14 +255,20 @@ print(list[1:-1]) # return [2,3,4]
 list[0,2] = 5 # replace [2,3] with 5, i.e. change list to [5,4]
 ```
 
+Dictionary
+```python
+dict = {'a': 1, 'b': 2, 'c': 3}
+```
+
 Queue
 ```python
 from collections import deque
 
 q = deque()
-q.append('a')
-q.append('b')
-
+q.append('a') # insert element to the right end
+q.appendleft('b') # insert element at left end
+print(q.pop()) # remove and returns the right-most element which 'a'
+print(q.popleft()) # remove and returns the left-most element which 'b'˚
 ```
 
 Set
@@ -280,9 +292,16 @@ set1.symmetric_difference(set2) # (set1 ^ set2) returns a new set with elements 
 
 ```python
 s = 'abc'
-s.zfill(5) # 'abc' -> '00abc'; adds zeros at the beginning of the string, until it reaches the specified length
+s = s.zfill(5) # 'abc' -> '00abc'; adds zeros at the beginning of the string, until it reaches the specified length
 
 numStr = "5"
-numStrR = numStr.rjust(4, '-') # '5' -> '---5'; Make string right justified of length 4 by padding 3 spaces to left
-numStrL = numStr.rjust(4, '-') # '5' -> '5---'; Make string left justified of length 4 by padding 3 spaces to left
+numStr = numStr.rjust(4, '-') # '5' -> '---5'; Make string right justified of length 4 by padding 3 spaces to left
+numStr = numStr.rjust(4, '-') # '5' -> '5---'; Make string left justified of length 4 by padding 3 spaces to left
+
+print(int(numStr)) # convert string to int
+print(str(5)) # convert int to string
+
+print(''.join(['a', 'b', 'c'])) # 'a', 'b', 'c' -> 'abc'
+
+print(s[::-1]) # reverse string
 ```
