@@ -51,6 +51,17 @@ class AwesomeClassWithGenerics(Generic[T]):
     def property(self) -> bool:
         return not self._property
 ```
+
+Enums
+```python
+from enum import Enum
+
+class Color(Enum):
+    WHITE= 0
+    GREY = 1
+    BLACK = 2
+```
+
 Staticmethod vs classmethod
 ```python
 class A(object):
@@ -257,7 +268,13 @@ list[0,2] = 5 # replace [2,3] with 5, i.e. change list to [5,4]
 
 Dictionary
 ```python
+from collections import defaultdict
+
 dict = {'a': 1, 'b': 2, 'c': 3}
+
+d = defaultdict(list) # create a defaultdict with an empty list as default value
+for i in range(5):
+    d[i].append(i)
 ```
 
 Queue
