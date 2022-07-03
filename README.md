@@ -23,9 +23,26 @@ The link to the official code examples is [here](https://github.com/davecom/Clas
 
 All code tasks from this book are done in Python
 
-# Random Python Tips
+# Random Python Tips˚
 
 ### Classes
+
+Equals and Hashcode
+```python
+class Node:
+    def __init__(self, a: int, b: int):
+        self.a = a
+        self.b = b
+
+    def __eq__(self, other: object) -> bool:
+        if isinstance(other, 'Node'):
+            self.a == other.a and self.b == other.b
+        return False
+
+    def __hash__(self) -> int:
+        return hash((self.a, self.b))
+
+```
 
 Generics, static fields and methods, properties
 ```python
@@ -244,9 +261,11 @@ for index, letter in enumerate(['A', 'B', 'C']):
 
 ### Main operations with collections
 
-List
+Array/List
 ```python
-list = [1,2,3]
+from typing import List
+
+list: List[int] = [1,2,3] # same as list = [1,2,3]
 list.append(4)
 list.extend([5, 6])
 list.insert(2, -1) # insert -1 at index 2 shifting elements to the right
@@ -266,15 +285,18 @@ print(list[1:-1]) # return [2,3,4]
 list[0,2] = 5 # replace [2,3] with 5, i.e. change list to [5,4]
 ```
 
-Dictionary
+Disctionary and Default Dictionary
 ```python
 from collections import defaultdict
 
 dict = {'a': 1, 'b': 2, 'c': 3}
+dict2 = {tuple([1, 2]): 1} # Lists are not unhashable but Tuples are
 
 d = defaultdict(list) # create a defaultdict with an empty list as default value
 for i in range(5):
     d[i].append(i)
+i = defaultdict(int) # create a defaultdict with 0 as default value
+i2 = defaultdict(lambda: 1) # # create a defaultdict with 1 as default value
 ```
 
 Queue
@@ -305,6 +327,33 @@ set1.difference(set2) # (set1 - set2) returns a new set with elements in set1 bu
 set1.symmetric_difference(set2) # (set1 ^ set2) returns a new set with elements in either set1 or set2 but not in both
 ```
 
+Heap
+```python
+from heapq import heapify, heappush, heappop
+
+a = [3, 5, 1, 2, 6, 8, 7]
+
+heapify(a) # create min heap in linear time
+heappush(a, 4)
+print(heappop(a)) # removed from the heap and returns 1
+print(a[0]) # returns the min heap value which is 2 now
+```
+
+Array/List and Binary Search
+```python
+# bisect_left and bisect_right return the leftmost and rightmost index where the value can be inserted 
+# without changing the order of elements. If the value does not exist in the list, they both return the same index. 
+# The difference arises when the value exists in the list. For example, to insert 10 into the list [10,20,30] 
+# without breaking the order, the leftmost index would be 0, and the rightmost index would be 1. 
+# However, to insert 10.5 into the same list, both leftmost and rightmost indices would be equal to 1
+from bisect import bisect_left, bisect_right
+
+print(bisect_left([10,20,30],10)) # prints 0
+print(bisect_right([10,20,30],10)) # prints 1
+print(bisect_left([10,20,30],10.5)) # prints 1
+print(bisect_right([10,20,30],10.5)) # prints 1
+```
+
 ### Main operations with string
 
 ```python
@@ -321,4 +370,12 @@ print(str(5)) # convert int to string
 print(''.join(['a', 'b', 'c'])) # 'a', 'b', 'c' -> 'abc'
 
 print(s[::-1]) # reverse string
+```
+
+### Math
+```python
+import math
+
+print(math.factorial(23))
+print(math.comb(7, 5)) # number of ways picking 5 unordered outcomes from 7 possibilities, without repetition, also known as combinations
 ```
