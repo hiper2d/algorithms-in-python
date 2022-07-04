@@ -1,0 +1,19 @@
+System Design topics:
+- Design Instagram.
+- Design Tik-Tok
+- Design twitter
+- Design Uber
+- Design What’s up
+- Discussion and designing LRU cache.
+- Design a garbage collection system.
+- Design a system to capture unique addresses in the entire world.
+- Design a recommendation system for products.
+- Design a toll system for highways.
+- Design URL Shortener.
+- Design Instant Messenger.
+- Design Elevator system.
+- Design distributed caching system.
+- Design Amazon Locker Service.
+- Design Amazon Best Seller Item Service.
+- Design warehouse system for Amazon
+- Design email sender that can send 100,000,000 emails. You have five machines. How could you do it efficiently?

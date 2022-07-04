@@ -372,7 +372,24 @@ print(''.join(['a', 'b', 'c'])) # 'a', 'b', 'c' -> 'abc'
 print(s[::-1]) # reverse string
 ```
 
+### Strings
+```python
+# Index Of
+s1="banana"
+print(s1.find("an"))
+print(s1.find("an", 2)) # returns 3; 2 is the start parameter
+print(s1.find("ba",1,5)) # return -1; 5 is the end parameter
+```
+
 ### Math
+```python
+import math
+
+print(math.factorial(23))
+print(math.comb(7, 5)) # number of ways picking 5 unordered outcomes from 7 possibilities, without repetition, also known as combinations
+```
+
+### Bool operations
 ```python
 import math
 
