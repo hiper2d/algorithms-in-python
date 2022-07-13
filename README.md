@@ -184,40 +184,8 @@ randrange(100) # int from 0 to 100
 shuffle([1,2,3,4])
 uniform(min([1,2,3,4]), max([1,2,3,4])) # returns a random floating number between the two specified numbers (both included)
 ```
-### Heap or Priority Queue
 
-I like this data structure, therefore I highlight some API for it in Python. It is min-heap.
-
-```python
-from heapq import heappush, heappop
-from typing import List, TypeVar, Generic
-
-T = TypeVar('T')
-
-class PriorityQueue(Generic[T]):
-    def __init__(self):
-        self._container: List[T] = []
-
-    @property
-    def empty(self) -> bool:
-        return not self._container
-
-    def push(self, item: T) -> None:
-        heappush(self._container, item)
-
-    def pop(self) -> T:
-        return heappop(self._container)
-```
-There are two convenient methods in heapq: nlargest/nsmallest
-```python
-from heapq import nlargest
-
-nlargest(2, [1,3,2])
-```
-
-### Nested for loops and array elements swaps
-
-Python has few tricks which were not intuitive for me as a Java developer
+### Python unique syntax
 
 Multiple for-loops can be combined in 1 line 
 ```python
@@ -247,16 +215,43 @@ minimum = min(a)
 indices = [i for i, v in enumerate(a) if v == minimum]
 ```
 
-Array elements swap
-```python
-arr = [1, 2, 3, 4]
-arr[1], arr[2] = arr[2], arr[1]
-```
-
+Iterate with index
 ```python
 # Iterate over a list with indices
 for index, letter in enumerate(['A', 'B', 'C']):
     print(index, letter)
+```
+
+Swap
+```python
+arr = [1, 2, 3, 4]
+arr[1], arr[2] = arr[2], arr[1]
+```
+Packing/Unpacking: * and **
+```python
+# Packing: We can pass any number of arguments here; "objects" is a tuples 
+def tmp(*objects):
+    ...
+tmp(1, 'text', ["text one", "text two"], {"your", "set"}, 100, .30, {"this": "is", "your": "dict"}, ("tuple", "too"))
+
+# Packing: We can pass any number of arguments here; "objects" is a dict 
+def tmp(**objects):
+    ...
+tmp(name="Tony", job="Hero", quotes="I love you tons")
+
+# Unpacking: For the variable d, we will get all remaining items thanks to the magic of unpacking
+seq = ["write", "and", "work", "from", "home", "is", "awesome"]
+a, b, c, *d = seq
+print(d) # ['from', 'home', 'is', 'awesome']
+
+# Unpacking: asterisk (*) before my_list will unpack/deconstruct items in my_list into separated 
+# arguments passed into the print function
+my_list = ["write", "from", "home"]
+print(*my_list) # same as print('write', 'from', 'home')
+
+# Unpacking: You can use double asterisk to deconstruct a dict
+someweirddata = {"hello":"world"}
+print({"initial data":"yati yati yata",**someweirddata})
 ```
 
 ### Main operations with collections
@@ -283,6 +278,9 @@ print(sorted(list)) # return sorted copy (does not change original)
 list[1,2,3,4,5]
 print(list[1:-1]) # return [2,3,4]
 list[0,2] = 5 # replace [2,3] with 5, i.e. change list to [5,4]
+
+# List from range
+print(list(range(5)))
 ```
 
 Disctionary and Default Dictionary
@@ -303,11 +301,11 @@ Queue
 ```python
 from collections import deque
 
-q = deque()
-q.append('a') # insert element to the right end
-q.appendleft('b') # insert element at left end
+q = deque(['a'])
+q.append('b') # insert element to the right end
+q.appendleft('c') # insert element at left end
 print(q.pop()) # remove and returns the right-most element which 'a'
-print(q.popleft()) # remove and returns the left-most element which 'b'˚
+print(q.popleft()) # remove and returns the left-most element which 'c'˚
 ```
 
 Set
@@ -337,6 +335,34 @@ heapify(a) # create min heap in linear time
 heappush(a, 4)
 print(heappop(a)) # removed from the heap and returns 1
 print(a[0]) # returns the min heap value which is 2 now
+```
+
+Priority Queue Implementation
+```python
+from heapq import heappush, heappop
+from typing import List, TypeVar, Generic
+
+T = TypeVar('T')
+
+class PriorityQueue(Generic[T]):
+    def __init__(self):
+        self._container: List[T] = []
+
+    @property
+    def empty(self) -> bool:
+        return not self._container
+
+    def push(self, item: T) -> None:
+        heappush(self._container, item)
+
+    def pop(self) -> T:
+        return heappop(self._container)
+```
+There are two convenient methods in heapq: nlargest/nsmallest
+```python
+from heapq import nlargest
+
+nlargest(2, [1,3,2])
 ```
 
 Array/List and Binary Search
