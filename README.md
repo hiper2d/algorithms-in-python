@@ -295,6 +295,10 @@ for i in range(5):
     d[i].append(i)
 i = defaultdict(int) # create a defaultdict with 0 as default value
 i2 = defaultdict(lambda: 1) # # create a defaultdict with 1 as default value
+
+# Iterate through dict
+for k,v in i.items():
+    print(k,v)
 ```
 
 Queue
