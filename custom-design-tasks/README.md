@@ -17,3 +17,4 @@ System Design topics:
 - Design Amazon Best Seller Item Service.
 - Design warehouse system for Amazon
 - Design email sender that can send 100,000,000 emails. You have five machines. How could you do it efficiently?
+- Design cloud thermostat control system with millions of detectors
