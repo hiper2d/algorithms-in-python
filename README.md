@@ -425,4 +425,8 @@ import math
 
 print(math.factorial(23))
 print(math.comb(7, 5)) # number of ways picking 5 unordered outcomes from 7 possibilities, without repetition, also known as combinations
+print(math.sqrt(4)) # 2
+print(math.pow(2, 3)) # 8
+print(math.floor(300.16)) # rounding to 300 which is int
+print(math.ceil(300.16)) # rounding to 301 which is int
 ```
