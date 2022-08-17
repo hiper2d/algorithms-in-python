@@ -424,4 +424,11 @@ print(math.sqrt(4)) # 2
 print(math.pow(2, 3)) # 8
 print(math.floor(300.16)) # rounding to 300 which is int
 print(math.ceil(300.16)) # rounding to 301 which is int
+
+# Weird division in Python
+3 / 2 # 1.5
+3 // 2 # 1
+# BUT
+-3 // 2 # -2 => This is because Python always floors to minus infinity
+int(-3 / 2) # -1 => This the way to divide to int line in Java
 ```
