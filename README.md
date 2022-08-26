@@ -301,6 +301,24 @@ for k,v in i.items():
     print(k,v)
 ```
 
+Stack
+```python
+from collections import deque
+
+s = deque()
+
+# Using queue tail for push/pop/peek:
+s.append(0)
+s.append(1)
+s[-1] # peek: returns 1
+s.pop() # same as pop(-1): returns 1
+
+# Using queue head for the same:
+s.appendleft(0)
+s[0] # peek: returns 0
+s.popleft() # returns 0
+```
+
 Queue
 ```python
 from collections import deque
