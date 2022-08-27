@@ -328,6 +328,8 @@ q.append('b') # insert element to the right end
 q.appendleft('c') # insert element at left end
 print(q.pop()) # remove and returns the right-most element which 'a'
 print(q.popleft()) # remove and returns the left-most element which 'c'˚
+
+q.clear()
 ```
 
 Set
