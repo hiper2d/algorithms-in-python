@@ -2,6 +2,9 @@ from typing import List, Tuple
 
 POSSIBLE = 'Possible'
 IMPOSSIBLE = 'Impossible'
+ROCK = '#'
+TREE = '^'
+EMPTY = '.'
 
 
 class Testcase:
@@ -10,8 +13,18 @@ class Testcase:
         self.trees_str: List[str] = trees_str
 
 
-def generate_all_trees(rows: int, cols: int) -> List[str]:
-    return ['^'*cols for _ in range(rows)]
+def check_for_at_least_two_friends(tree: List[str], row: int, col: int) -> bool:
+    max_row, max_col = len(tree)-1, len(tree[0])-1
+    friends_count = 0
+    if row < max_row and tree[row+1][col] != ROCK:
+        friends_count += 1
+    if row > 0 and tree[row-1][col] != ROCK:
+        friends_count += 1
+    if col < max_col and tree[row][col+1] != ROCK:
+        friends_count += 1
+    if col > 0 and tree[row][col-1] != ROCK:
+        friends_count += 1
+    return friends_count >= 2
 
 
 class Solution:
@@ -31,7 +44,7 @@ class Solution:
     def load_testcases(path: str) -> List[Testcase]:
         testcases: List[Testcase] = []
         with open(path) as f:
-            testcase_num = int(f.readline())
+            testcase_num = int(f.readline().strip())
             for _ in range(testcase_num):
                 [rows_str, _] = f.readline().split()
                 rows = int(rows_str)
@@ -40,7 +53,7 @@ class Solution:
                 for i in range(rows):
                     row_from_file = f.readline().strip()
                     trees_str.append(row_from_file)
-                    if '^' in row_from_file:
+                    if TREE in row_from_file:
                         has_at_least_one_tree = True
                 testcase = Testcase(trees_str, has_at_least_one_tree)
                 testcases.append(testcase)
@@ -53,11 +66,17 @@ class Solution:
         elif len(t.trees_str) == 1 or len(t.trees_str[0]) == 1:
             return IMPOSSIBLE, []
         else:
-            return POSSIBLE, generate_all_trees(len(t.trees_str), len(t.trees_str[0]))
+            for r in range(len(t.trees_str)):
+                for c in range(len(t.trees_str[0])):
+                    if t.trees_str[r][c] == TREE:
+                        if not check_for_at_least_two_friends(t.trees_str, r, c):
+                            return IMPOSSIBLE, []
+                t.trees_str[r] = t.trees_str[r].replace(EMPTY, TREE)
+            return POSSIBLE, t.trees_str
 
 
 if __name__ == "__main__":
-    solution = Solution('second_friend_input.txt')
+    solution = Solution('second_second_friend_input.txt')
     with open('output.txt', mode='w') as f:
         for o in solution.create_output():
             f.write(o + '\n')
