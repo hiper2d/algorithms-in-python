@@ -102,6 +102,10 @@ class Solution:
 
     @staticmethod
     def detect_convex_hull(t: Testcase):
+        """
+        This method is super slow (n^2) and cannot handle the 'lemonade_life_input.txt' file
+        Try this one (n*log(n)): https://www.geeksforgeeks.org/convex-hull-set-2-graham-scan/
+        """
         start = 0
         p = start
         while True:
