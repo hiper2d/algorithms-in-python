@@ -230,14 +230,14 @@ arr[1], arr[2] = arr[2], arr[1]
 Packing/Unpacking: * and **
 ```python
 # Packing: We can pass any number of arguments here; "objects" is a tuples 
-def tmp(*objects):
+def consecutive_cuts(*objects):
     ...
-tmp(1, 'text', ["text one", "text two"], {"your", "set"}, 100, .30, {"this": "is", "your": "dict"}, ("tuple", "too"))
+consecutive_cuts(1, 'text', ["text one", "text two"], {"your", "set"}, 100, .30, {"this": "is", "your": "dict"}, ("tuple", "too"))
 
 # Packing: We can pass any number of arguments here; "objects" is a dict 
-def tmp(**objects):
+def consecutive_cuts(**objects):
     ...
-tmp(name="Tony", job="Hero", quotes="I love you tons")
+consecutive_cuts(name="Tony", job="Hero", quotes="I love you tons")
 
 # Unpacking: For the variable d, we will get all remaining items thanks to the magic of unpacking
 seq = ["write", "and", "work", "from", "home", "is", "awesome"]
@@ -434,6 +434,7 @@ print(s1.find("ba",1,5)) # return -1; 5 is the end parameter
 ### Math
 ```python
 import math
+import sys
 
 print(math.factorial(23))
 print(math.comb(7, 5)) # number of ways picking 5 unordered outcomes from 7 possibilities, without repetition, also known as combinations
@@ -451,4 +452,10 @@ print(math.ceil(300.16)) # rounding to 301 which is int
 # BUT
 -3 // 2 # -2 => This is because Python always floors to minus infinity
 int(-3 / 2) # -1 => This the way to divide to int line in Java
+
+# Max/Min numbers
+max_int = sys.maxsize
+min_int = -sys.maxsize - 1
+max_float = math.inf
+min_float = -math.inf
 ```
