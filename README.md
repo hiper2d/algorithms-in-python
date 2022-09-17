@@ -382,6 +382,12 @@ class PriorityQueue(Generic[T]):
     def pop(self) -> T:
         return heappop(self._container)
 ```
+
+Ordered Dict and LRU Cache:
+```python
+
+```
+
 There are two convenient methods in heapq: nlargest/nsmallest
 ```python
 from heapq import nlargest
@@ -426,9 +432,15 @@ print(s[::-1]) # reverse string
 ```python
 # Index Of
 s1="banana"
-print(s1.find("an"))
+print(s1.find("an")) # returns -1 when cannot find while index() throws ValueError
 print(s1.find("an", 2)) # returns 3; 2 is the start parameter
 print(s1.find("ba",1,5)) # return -1; 5 is the end parameter
+
+s2 = s1.replace("a", "A") # bAnAnA
+s3 = s1.replace("a", "c", 2) # bAnAna
+
+# Convert binary string to int
+int("0101", 2)
 ```
 
 ### Math
