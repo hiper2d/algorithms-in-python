@@ -11,17 +11,22 @@ class LruCacheWithOrderedDict(Generic[K, V]):
         self.storage: OrderedDict[K, V] = OrderedDict[K, V]()
 
     def put(self, key: K, value: V) -> None:
-        if key not in self.storage:
-            if self.capacity < self.max_capacity:
-                self.capacity += 1
-            else:
+        if value in self.storage:
+            self.storage[key] = value
+            self.storage.move_to_end(key)
+        else:
+            if self.capacity == self.max_capacity:
                 self.storage.popitem(last=False)
-        self.storage[key] = value
+            else:
+                self.capacity += 1
+            self.storage[key] = value
 
     def get(self, key: K) -> Optional[V]:
         if key in self.storage:
+            self.storage.move_to_end(key)
             return self.storage[key]
-        return None
+        else:
+            return None
 
     def __getitem__(self, key: K):
         return self.get(key)

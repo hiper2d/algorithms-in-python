@@ -1,7 +1,7 @@
 import unittest
 
-from lrucache.lru_cache import LruCache
 from lrucache.lru_cache_with_ordereddict import LruCacheWithOrderedDict
+from lrucache.new_lru_cache import LruCache
 
 
 class LruCacheTest(unittest.TestCase):

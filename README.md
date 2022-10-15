@@ -311,7 +311,7 @@ s = deque()
 s.append(0)
 s.append(1)
 s[-1] # peek: returns 1
-s.pop() # same as pop(-1): returns 1
+s.pop() # returns 1
 
 # Using queue head for the same:
 s.appendleft(0)
@@ -385,7 +385,13 @@ class PriorityQueue(Generic[T]):
 
 Ordered Dict and LRU Cache:
 ```python
+from collections import OrderedDict 
 
+d = OrderedDict()
+d[1] = 'one'
+d[2] = 'two'
+d.move_to_end(1)
+d.popitem(last=False) # this will delete key=2
 ```
 
 There are two convenient methods in heapq: nlargest/nsmallest
