@@ -254,7 +254,7 @@ someweirddata = {"hello":"world"}
 print({"initial data":"yati yati yata",**someweirddata})
 ```
 
-### Main operations with collections
+### Collections
 
 Array/List
 ```python
@@ -299,6 +299,17 @@ i2 = defaultdict(lambda: 1) # # create a defaultdict with 1 as default value
 # Iterate through dict
 for k,v in i.items():
     print(k,v)
+```
+
+Ordered Dict and LRU Cache:
+```python
+from collections import OrderedDict 
+
+d = OrderedDict()
+d[1] = 'one'
+d[2] = 'two'
+d.move_to_end(1)
+d.popitem(last=False) # this will delete key=2
 ```
 
 Stack
@@ -361,7 +372,7 @@ print(heappop(a)) # removed from the heap and returns 1
 print(a[0]) # returns the min heap value which is 2 now
 ```
 
-Priority Queue Implementation
+Priority Queue
 ```python
 from heapq import heappush, heappop
 from typing import List, TypeVar, Generic
@@ -383,15 +394,37 @@ class PriorityQueue(Generic[T]):
         return heappop(self._container)
 ```
 
-Ordered Dict and LRU Cache:
+Union Find
 ```python
-from collections import OrderedDict 
+class UnionFind:
+    def __init__(self, size: int) -> None:
+        self.group = [0] * size
+        self.rank = [0] * size
+        for i in range(size):
+            self.group[i] = i
+      
+    def find(self, node: int) -> int:
+        if self.group[node] != node:
+            self.group[node] = self.find(self.group[node]) # path compression
+        return self.group[node]
 
-d = OrderedDict()
-d[1] = 'one'
-d[2] = 'two'
-d.move_to_end(1)
-d.popitem(last=False) # this will delete key=2
+    def union(self, node1: int, node2: int) -> bool:
+        group1 = self.find(node1)
+        group2 = self.find(node2)
+        
+        # node1 and node2 already belong to same group.
+        if group1 == group2:
+            return False
+
+        if self.rank[group1] > self.rank[group2]:
+            self.group[group2] = group1
+        elif self.rank[group1] < self.rank[group2]:
+            self.group[group1] = group2
+        else:
+            self.group[group1] = group2
+            self.rank[group2] += 1
+
+        return True
 ```
 
 There are two convenient methods in heapq: nlargest/nsmallest
@@ -416,7 +449,7 @@ print(bisect_left([10,20,30],10.5)) # prints 1
 print(bisect_right([10,20,30],10.5)) # prints 1
 ```
 
-### Main operations with string
+### Strings
 
 ```python
 s = 'abc'
@@ -432,10 +465,7 @@ print(str(5)) # convert int to string
 print(''.join(['a', 'b', 'c'])) # 'a', 'b', 'c' -> 'abc'
 
 print(s[::-1]) # reverse string
-```
 
-### Strings
-```python
 # Index Of
 s1="banana"
 print(s1.find("an")) # returns -1 when cannot find while index() throws ValueError
