@@ -301,7 +301,7 @@ for k,v in i.items():
     print(k,v)
 ```
 
-Ordered Dict and LRU Cache:
+OrderedDict and LRU Cache:
 ```python
 from collections import OrderedDict 
 
@@ -310,6 +310,25 @@ d[1] = 'one'
 d[2] = 'two'
 d.move_to_end(1)
 d.popitem(last=False) # this will delete key=2
+```
+
+Counter
+```python
+from collections import Counter
+
+c = Counter([1,1,2,3])
+print(c[1]) # return 2
+print(c[4]) # return 0
+
+c2 = Counter('aaab')
+print(c2[1]) # return 3
+
+# Merge Counters
+c3 = c + c2
+c.update(c2)
+
+print(c.most_common()) # return sorted dict in order from most common
+print(c.most_common(1)) # return 1 most common item
 ```
 
 Stack
@@ -452,6 +471,9 @@ print(bisect_right([10,20,30],10.5)) # prints 1
 ### Strings
 
 ```python
+strToInt = ord('d')
+intToChar = chr(50)
+
 s = 'abc'
 s = s.zfill(5) # 'abc' -> '00abc'; adds zeros at the beginning of the string, until it reaches the specified length
 
