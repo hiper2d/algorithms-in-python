@@ -327,6 +327,9 @@ print(c2[1]) # return 3
 c3 = c + c2
 c.update(c2)
 
+# Don use "-" for subtraction. It created a new Counter object with all 0 and negative values ignored
+c.subtract(c2) # modifies c
+
 print(c.most_common()) # return sorted dict in order from most common
 print(c.most_common(1)) # return 1 most common item
 ```
@@ -466,6 +469,25 @@ print(bisect_left([10,20,30],10)) # prints 0
 print(bisect_right([10,20,30],10)) # prints 1
 print(bisect_left([10,20,30],10.5)) # prints 1
 print(bisect_right([10,20,30],10.5)) # prints 1
+```
+
+Array/List sorting
+```python
+[1, 3, 2].sort()
+sorted([1, 3, 4], reverse=True)
+
+# Sort by two field of an object:
+players = [[1,1], [2,2]]
+players.sort(key=lambda x: (x[0], x[1]))
+
+#Sort using comparator
+class CaseIgnoreComparator(str):
+    def __lt__(self, other):
+        w1 = self
+        w2 = other
+        return w1.lower() < w2.lower()
+
+sorted_words = sorted(['abc', 'Abd'], key=CaseIgnoreComparator)
 ```
 
 ### Strings
