@@ -469,6 +469,9 @@ print(bisect_left([10,20,30],10)) # prints 0
 print(bisect_right([10,20,30],10)) # prints 1
 print(bisect_left([10,20,30],10.5)) # prints 1
 print(bisect_right([10,20,30],10.5)) # prints 1
+
+# Binary search with key function
+bisect_left([1, 2, 3], 20, key=lambda x: x * 10)
 ```
 
 Array/List sorting
