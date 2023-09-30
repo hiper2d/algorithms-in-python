@@ -1,16 +1,17 @@
+from functools import lru_cache
 from typing import List
 
 
 class Testcase:
-    def __init__(self, i: int, n: int, s: int, d: int, k: int):
+    def __init__(self, i: int, n: int, a: int, b: int, c: int):
         self.i = i
         self.n = n
-        self.s = s
-        self.d = d
-        self.k = k
+        self.a = a
+        self.b = b
+        self.c = c
 
     def __repr__(self):
-        return f"Testcase(i={self.i}, n={self.n}, s={self.s}, d={self.d}, k={self.k})"
+        return f"Testcase(i={self.i}, n={self.n}, a={self.a}, b={self.b}, c={self.c})"
 
 
 class Solution:
@@ -35,21 +36,31 @@ class Solution:
         output: List[str] = []
         for i, t in enumerate(self.testcases):
             res = self.process_testcase(t)
-            output.append(f"Case #{i+1}: {'YES' if res else 'NO'}")
+            output.append(f"Case #{i+1}: {res}")
         return output
 
     @staticmethod
-    def process_testcase(t: Testcase) -> bool:
-        print(t)
-        s, d, k = t.s, t.d, t.k
-        buns = 2 * s + 2 * d
-        patties = s + 2 * d
-        # print(f"buns: {buns}, patties: {patties}, k: {k}, ans: {patties >= k and patties <= buns - 1}")
-        return patties >= k and k <= buns - 1
+    def process_testcase(t: Testcase) -> int:
+        # print(t)
+        i, a, b, c = t.i, t.a, t.b, t.c
+
+        if c < a and c < b:
+            return 0
+
+        if 2*a <= b:
+            ans, rem = divmod(c, a)
+        else:
+            ans, rem = divmod(c, b)
+            ans *= 2
+            if rem < min(a, b):
+                ans -= 1
+            else:
+                ans += 1
+        return ans
 
 
 if __name__ == "__main__":
-    solution = Solution('cheeseburger_corollary_1_input_submit.txt')
+    solution = Solution('cheeseburger_corollary_2_input.txt')
     with open('output.txt', mode='w') as f:
         for o in solution.create_output():
             print(o)
